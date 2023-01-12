@@ -1,0 +1,11 @@
+node {  
+    stage('Build') { 
+        checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '780e7797-34ed-4214-a648-1fbac8e8f272', url: 'https://github.com/baluusamy/simpleMavenJunit']]) 
+    }
+    stage('Test') { 
+        sh 'mvn clean install'
+    }
+    stage('Deploy') { 
+        emailext body: 'notify sucess', subject: 'test job', to: 'ranjithganesan03@gmail.com'
+    }
+}
